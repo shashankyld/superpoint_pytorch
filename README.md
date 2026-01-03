@@ -19,3 +19,13 @@ uv run ruff check .
 # Formats the codebase
 uv run ruff format .
 ```
+
+
+## Notes
+```
+# 1. I just have notebooks folder to verify all the classes that I create of the model, dataset, evaluation metrics.
+
+```
+
+## Model Architecture
+![alt text](media/model_infographics.png "Model Infographics")
