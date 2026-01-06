@@ -1,0 +1,34 @@
+input:
+  width: 320
+  height: 240
+
+primitive:
+  types:
+    - lines
+    - cubes
+    - elipses
+    - polygons
+
+augmentations:
+  - background_noise
+  - brightness
+  - contrast
+  - blur 
+  - homographic_warp
+  - random_crop
+  - salt_and_pepper_noise
+  - gaussian_noise
+  - jpeg_compression
+  - motion_blur
+  - speckle_noise
+  - defocus_blur
+  - fog
+
+num_images: 10000
+output_path: ./synthetic_dataset/
+save_synthetic_dataset: true
+save_interval: 1000
+
+
+
+

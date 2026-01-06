@@ -1,0 +1,33 @@
+input: 
+  width: 320
+  height: 240
+
+dataset:
+  name: synthetic_dataset
+  path: ./configs/${dataset.name}.yaml
+
+primitive:
+  types: #Subset of primitives from the dataset config
+    - lines
+    - elipses
+
+augmentations: #Subset of augmentations from the dataset config
+  - brightness
+  - contrast
+  - homographic_warp
+  - salt_and_pepper_noise
+  - gaussian_noise
+
+num_images: 5000
+
+model: 
+  name: magicpoint
+  run_name: magicpoint_experiment_1
+  weights_path: ./weights/magicpoint_weights_${model.run_name}.pth
+
+
+logging:
+  project_name: "superpoint-pytorch"
+  run_name: "magicpoint-synthetic-v1"
+  log_images: true
+  log_interval: 20  # Log metrics every 20 batches

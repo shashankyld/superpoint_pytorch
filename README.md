@@ -20,6 +20,14 @@ uv run ruff check .
 uv run ruff format .
 ```
 
+## Requirements
+```
+(tested on)
+1. python == 3.13
+2. pytorch == 2.1.1
+3. torchvision == 0.16.1
+
+```
 
 ## Notes
 ```
