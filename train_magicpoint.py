@@ -1,3 +1,4 @@
+import shutil
 import cv2
 import torch
 import numpy as np
@@ -66,7 +67,6 @@ def get_visual_logs(img_aug, pts_aug, logits, thresh, epoch, step):
         "visuals/confidence_heatmap": wandb.Image(heatmap_np, caption="Model Confidence"),
         "visuals/prediction_overlay": wandb.Image(img_rgb_pred, caption=f"Preds Green (Thresh {thresh})")
     }
-
 def train():
     # 1. INITIALIZE W&B
     wandb.init(
@@ -80,7 +80,7 @@ def train():
             "width": 320,
             "n_shapes": 8,
             "quality_level": 0.01,
-            "det_thresh": 0.015, # Probability threshold for visualizing green dots
+            "det_thresh": 0.015,
             "architecture": "MagicPoint-VGG"
         }
     )
@@ -97,17 +97,29 @@ def train():
         collate_fn=superpoint_collate
     )
     
-    # Dynamic Checkpoint Frequency (10% of total batches)
     total_batches = len(dataloader)
     save_freq = max(1, total_batches // 10)
     
-    # 3. MODEL, AUGMENTOR, OPTIMIZER
+    # 3. MODEL & RESUME LOGIC
     model = MagicPoint().to(device)
+    
+    # --- RESUME CHECK ---
+    checkpoint_dir = "checkpoints"
+    os.makedirs(checkpoint_dir, exist_ok=True)
+    best_path = os.path.join(checkpoint_dir, "magicpoint_best.pth")
+    
+    if os.path.exists(best_path):
+        print(f"[*] Found existing checkpoint at {best_path}. Resuming...")
+        state_dict = torch.load(best_path, map_location=device, weights_only=True)
+        model.load_state_dict(state_dict)
+    else:
+        print("[!] No checkpoint found. Starting training from scratch.")
+    # --------------------
+
     augmentor = SyntheticAugmentor(config.height, config.width).to(device)
-    criterion = SuperPointLoss().to(device) # Ensure weights are set in losses.py!
+    criterion = SuperPointLoss().to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=config.lr)
 
-    os.makedirs("checkpoints", exist_ok=True)
     print(f"Ready. Total batches: {total_batches}. Saving every {save_freq} batches.")
 
     # 4. TRAINING LOOP
@@ -119,14 +131,9 @@ def train():
         for i, batch in enumerate(pbar):
             img, pts = batch
             img, pts = img.to(device), pts.to(device)
-
-            # Synchronized GPU Augmentation
             img_aug, pts_aug = augmentor(img, pts)
 
-            # Forward Pass
             logits = model(img_aug)
-            
-            # Weighted Loss Calculation (expects dicts)
             loss, det_loss, _ = criterion(
                 outputs={'logits': logits}, 
                 targets={'keypoints': pts_aug}
@@ -138,30 +145,37 @@ def train():
 
             epoch_loss += loss.item()
             
-            # --- 10% CHECKPOINTING ---
+            # --- 10% CHECKPOINTING & UPDATING BEST ---
             if (i + 1) % save_freq == 0:
                 pct = int(((i + 1) / total_batches) * 100)
-                path = f"checkpoints/magicpoint_ep{epoch}_p{pct}.pth"
+                current_ckpt_name = f"magicpoint_ep{epoch}_p{pct}.pth"
+                path = os.path.join(checkpoint_dir, current_ckpt_name)
+                
+                # Save the specific checkpoint
                 torch.save(model.state_dict(), path)
+                
+                # Replace magicpoint_best.pth with this latest save
+                shutil.copyfile(path, best_path)
+                # print(f" [Checkpoint] Saved {current_ckpt_name} and updated magicpoint_best.pth")
             
             # --- LOGGING ---
-            metrics = {
-                "batch_loss": loss.item(),
-                "det_loss": det_loss.item(),
-                "epoch": epoch,
-                "percent_of_epoch": (i / total_batches) * 100
-            }
-
-            # Visual debug every 100 steps
             if i % 100 == 0:
+                metrics = {
+                    "batch_loss": loss.item(),
+                    "det_loss": det_loss.item(),
+                    "epoch": epoch,
+                    "percent_of_epoch": (i / total_batches) * 100
+                }
                 visuals = get_visual_logs(img_aug, pts_aug, logits, config.det_thresh, epoch, i)
                 metrics.update(visuals)
+                wandb.log(metrics)
             
-            wandb.log(metrics)
             pbar.set_postfix(loss=loss.item())
 
-        # Save at end of epoch
-        torch.save(model.state_dict(), f"checkpoints/magicpoint_final_ep{epoch}.pth")
+        # Save at end of epoch and update best
+        final_epoch_path = os.path.join(checkpoint_dir, f"magicpoint_final_ep{epoch}.pth")
+        torch.save(model.state_dict(), final_epoch_path)
+        shutil.copyfile(final_epoch_path, best_path)
 
 if __name__ == "__main__":
     train()

@@ -8,3 +8,12 @@ wheels/
 
 # Virtual environments
 .venv
+
+
+# Weights and Checkpoints
+checkpoints/*
+# DO NOT ignore the best weights
+!checkpoints/magicpoint_best.pth
+
+# Weights & Biases
+wandb/

@@ -1,2 +1,2 @@
 Ready. Total batches: 3125. Saving every 312 batches.
-Epoch 1:   0%|                              | 2/3125 [00:05<2:11:52,  2.53s/it, loss=3.61]
+Epoch 1:  84%|██████████████████████▌    | 2616/3125 [3:03:59<52:35,  6.20s/it, loss=1.97]
