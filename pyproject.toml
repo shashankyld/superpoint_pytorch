@@ -15,3 +15,6 @@ dependencies = [
     "tqdm>=4.67.1",
     "wandb>=0.23.1",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]

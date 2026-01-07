@@ -35,5 +35,19 @@ uv run ruff format .
 
 ```
 
+## Implementation details 
+
+Step 1: Train Magic Point on Synthetic Dataset
+#### Image of synthetic dataset created using cubes - shapes.py
+![alt text](media/Synthetic_Cube_Dataset.png "Synthetic Cube Dataset")
+#### Image of synthetic dataset created using checkerboards - shapes.py
+![alt text](media/Synthetic_CheckerBoard_Dataset.png "Synthetic Checkerboard Dataset")
+#### Sample of Data Augmentations used in Synthetic Dataset
+```
+One thing that I think I will avoid is to set keypoints at intersections that exist in 2D because of overlapping shapes but really they are not stable points to track. Imagine as the camera moves, the intersection keeps changing in the 2D space in the case shown below:
+```
+![alt text](media/Synthetic_Augmentation_Dataset.png "Intersection Issue")
+
+
 ## Model Architecture
 ![alt text](media/model_infographics.png "Model Infographics")
