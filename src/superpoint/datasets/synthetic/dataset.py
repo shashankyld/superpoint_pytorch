@@ -12,7 +12,7 @@ class SyntheticDataset(Dataset):
         self.n_shapes = config.n_shapes
 
     def __len__(self):
-        return 1000000 # Infinite generator
+        return 100000 # Infinite generator
 
 
 

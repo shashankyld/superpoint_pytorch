@@ -1,0 +1,40 @@
+{
+  "os":  "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+  "python":  "CPython 3.13.11",
+  "startedAt":  "2026-01-07T17:57:27.555287Z",
+  "program":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py",
+  "codePath":  "train_magicpoint.py",
+  "codePathLocal":  "train_magicpoint.py",
+  "git":  {
+    "remote":  "git@github.com:shashankyld/superpoint_pytorch.git",
+    "commit":  "b7cf11245981c4581de0f1b5efb930f6e8643f8a"
+  },
+  "email":  "shashankyld@gmail.com",
+  "root":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch",
+  "host":  "legion",
+  "executable":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/bin/python3",
+  "cpu_count":  8,
+  "cpu_count_logical":  16,
+  "gpu":  "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "gpu_count":  1,
+  "disk":  {
+    "/":  {
+      "total":  "1006450962432",
+      "used":  "918083067904"
+    }
+  },
+  "memory":  {
+    "total":  "14494162944"
+  },
+  "gpu_nvidia":  [
+    {
+      "name":  "NVIDIA GeForce RTX 3060 Laptop GPU",
+      "memoryTotal":  "6442450944",
+      "cudaCores":  3840,
+      "architecture":  "Ampere",
+      "uuid":  "GPU-312b9845-4a50-1884-7152-fc2b7033ce99"
+    }
+  ],
+  "cudaVersion":  "12.4",
+  "writerId":  "yyk4ftln53psbq4emlewxbnf1n9uxiq1"
+}

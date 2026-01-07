@@ -1,0 +1,70 @@
+_wandb:
+    value:
+        cli_version: 0.23.1
+        e:
+            yyk4ftln53psbq4emlewxbnf1n9uxiq1:
+                codePath: train_magicpoint.py
+                codePathLocal: train_magicpoint.py
+                cpu_count: 8
+                cpu_count_logical: 16
+                cudaVersion: "12.4"
+                disk:
+                    /:
+                        total: "1006450962432"
+                        used: "918083067904"
+                email: shashankyld@gmail.com
+                executable: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/bin/python3
+                git:
+                    commit: b7cf11245981c4581de0f1b5efb930f6e8643f8a
+                    remote: git@github.com:shashankyld/superpoint_pytorch.git
+                gpu: NVIDIA GeForce RTX 3060 Laptop GPU
+                gpu_count: 1
+                gpu_nvidia:
+                    - architecture: Ampere
+                      cudaCores: 3840
+                      memoryTotal: "6442450944"
+                      name: NVIDIA GeForce RTX 3060 Laptop GPU
+                      uuid: GPU-312b9845-4a50-1884-7152-fc2b7033ce99
+                host: legion
+                memory:
+                    total: "14494162944"
+                os: Linux-5.15.0-139-generic-x86_64-with-glibc2.31
+                program: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py
+                python: CPython 3.13.11
+                root: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch
+                startedAt: "2026-01-07T17:57:27.555287Z"
+                writerId: yyk4ftln53psbq4emlewxbnf1n9uxiq1
+        m: []
+        python_version: 3.13.11
+        t:
+            "1":
+                - 1
+                - 79
+            "2":
+                - 1
+                - 79
+            "3":
+                - 13
+                - 16
+            "4": 3.13.11
+            "5": 0.23.1
+            "12": 0.23.1
+            "13": linux-x86_64
+architecture:
+    value: MagicPoint-VGG
+batch_size:
+    value: 32
+det_thresh:
+    value: 0.015
+epochs:
+    value: 20
+height:
+    value: 240
+lr:
+    value: 0.001
+n_shapes:
+    value: 8
+quality_level:
+    value: 0.01
+width:
+    value: 320

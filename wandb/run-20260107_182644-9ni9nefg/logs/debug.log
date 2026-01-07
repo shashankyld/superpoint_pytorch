@@ -19,3 +19,83 @@ config: {'lr': 0.001, 'batch_size': 32, 'epochs': 20, 'height': 240, 'width': 32
 2026-01-07 18:26:45,323 INFO    MainThread:29729 [wandb_run.py:_redirect():2438] Wrapping output streams.
 2026-01-07 18:26:45,323 INFO    MainThread:29729 [wandb_run.py:_redirect():2461] Redirects installed.
 2026-01-07 18:26:45,326 INFO    MainThread:29729 [wandb_init.py:init():1081] run started, returning control to user process
+2026-01-07 18:44:46,391 INFO    wandb-AsyncioManager-main:29729 [service_client.py:_forward_responses():80] Reached EOF.
+2026-01-07 18:44:46,391 INFO    wandb-AsyncioManager-main:29729 [mailbox.py:close():137] Closing mailbox, abandoning 1 handles.
+2026-01-07 18:44:46,788 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2026-01-07 18:44:46,802 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2026-01-07 18:44:46,805 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2026-01-07 18:44:46,807 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2026-01-07 18:44:46,807 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
+2026-01-07 18:44:46,809 ERROR   wandb-AsyncioManager-main:29729 [asyncio_manager.py:fn_wrap_exceptions():183] Uncaught exception in run_soon callback.
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/asyncio_manager.py", line 181, in fn_wrap_exceptions
+    await fn()
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 38, in publish
+    await self._send_server_request(request)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/lib/service/service_client.py", line 64, in _send_server_request
+    await self._writer.drain()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 386, in drain
+    await self._protocol._drain_helper()
+  File "/home/shashank/.local/share/uv/python/cpython-3.13.11-linux-x86_64-gnu/lib/python3.13/asyncio/streams.py", line 166, in _drain_helper
+    raise ConnectionResetError('Connection lost')
+ConnectionResetError: Connection lost
