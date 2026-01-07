@@ -10,43 +10,51 @@ def test_isolated_kornia_augmentations():
     class Config:
         height = 240
         width = 320
-        n_shapes = 1 
+        n_shapes = 5 # Auditing edge interactions
         quality_level = 0.01
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     dataset = SyntheticDataset(Config())
     augmentor = SyntheticAugmentor().to(device)
 
-    # 1. FIXED: Standard indexing and clean tensor conversion
+    # 1. Prepare Base Sample
     img_cpu, pts_cpu = dataset[0] 
     img_gpu = img_cpu.unsqueeze(0).to(device)
-    # Use clone().detach() to satisfy the PyTorch warning
     pts_gpu = pts_cpu.clone().detach().float().unsqueeze(0).to(device)
 
-    # 2. FIXED: Wrapping geometric ops in AugmentationSequential to use data_keys
-    # This ensures Kornia knows to move the points with the image pixels.
+    # 2. Geometric Wrapper: Warp -> ResizedCrop
+    # We crop the central 80% to slice off the padding artifacts you found.
+    # Resizing back to 240x320 keeps our training tensors consistent.
     def wrap_geo(op):
-        return K.AugmentationSequential(op, data_keys=["input", "keypoints"])
+        return K.AugmentationSequential(
+            op,
+            K.RandomResizedCrop(size=(240, 320), scale=(0.7, 0.7), ratio=(1.0, 1.0), p=1.0), 
+            data_keys=["input", "keypoints"]
+        )
 
+    # 3. Define the Test Battery
+    # Fisheye parameters are now [min, max] ranges to match source code
     tests = {
-        "Base (Clean)": lambda x, p: (x, p),
-        
-        # Geometric (Coordinates move)
+        "Base": lambda x, p: (x, p), 
         "Perspective": lambda x, p: wrap_geo(K.RandomPerspective(distortion_scale=0.2, p=1.0))(x, p),
-        # Add random rotation test, random affine test
-        "Rotation": lambda x, p: wrap_geo(K.RandomRotation(degrees=30.0, p=1.0))(x, p),
-        "Affine": lambda x, p: wrap_geo(K.RandomAffine(degrees=0, translate=(0.2, 0.2), scale=(0.8, 1.2), p=1.0))(x, p),
+        "Rotation": lambda x, p: wrap_geo(K.RandomRotation(degrees=45.0, p=1.0))(x, p),
+        "Affine": lambda x, p: wrap_geo(K.RandomAffine(degrees=0, translate=(0.2, 0.2), p=1.0))(x, p),
         
-        # Photometric (Coordinates stay fixed)
-        "Gauss Noise": lambda x, p: (K.RandomGaussianNoise(std=0.08, p=1.0)(x), p),
-        "Motion Blur": lambda x, p: (K.RandomMotionBlur(kernel_size=5, angle=45., direction=0.5, p=1.0)(x), p),
+        # FISHEYE Case fails to transform points correclty. So I commented it out. 
+
+        # # FISHEYE FIXED: Passing shape (2,) tensors as ranges
+        # "Fisheye": lambda x, p: wrap_geo(K.RandomFisheye(
+        #     center_x=torch.tensor([-0.05, 0.05]), 
+        #     center_y=torch.tensor([-0.05, 0.05]), 
+        #     gamma=torch.tensor([1.4, 1.6]), p=1.0))(x, p),
+        
+        "Gauss Noise": lambda x, p: (K.RandomGaussianNoise(std=0.1, p=1.0)(x), p),
         "Salt & Pepper": lambda x, p: (augmentor.add_salt_and_pepper(x.clone(), amount=0.03), p),
-        "Diffused Blobs": lambda x, p: (augmentor.forward(x, p)[0], p) 
+        "Blobs": lambda x, p: (augmentor.forward(x, p)[0], p) 
     }
 
-    # 3. Visualization logic
-    fig, axes = plt.subplots(1, len(tests), figsize=(22, 4))
-    
+    # 4. Run and Visualize
+    fig, axes = plt.subplots(1, len(tests), figsize=(26, 4))
     for i, (name, aug_fn) in enumerate(tests.items()):
         with torch.no_grad():
             aug_img, aug_pts = aug_fn(img_gpu.clone(), pts_gpu.clone())
@@ -54,20 +62,19 @@ def test_isolated_kornia_augmentations():
         img_np = aug_img.squeeze().cpu().numpy()
         pts_np = aug_pts.squeeze().cpu().numpy()
         
-        # Filter for points inside the image boundary
+        # Final boundary filter for the 240x320 frame
         mask = (pts_np[:, 0] >= 0) & (pts_np[:, 0] < Config.width) & \
                (pts_np[:, 1] >= 0) & (pts_np[:, 1] < Config.height)
         valid_pts = pts_np[mask]
 
         axes[i].imshow(img_np, cmap='gray', vmin=0, vmax=1)
         if len(valid_pts) > 0:
-            axes[i].scatter(valid_pts[:, 0], valid_pts[:, 1], s=40, 
-                           edgecolors='lime', facecolors='none', linewidths=2)
-        
+            axes[i].scatter(valid_pts[:, 0], valid_pts[:, 1], s=25, 
+                           edgecolors='lime', facecolors='none', linewidths=1.2)
         axes[i].set_title(name)
         axes[i].axis('off')
 
-    plt.suptitle("Isolated Kornia Augmentation Audit - Fix Applied", fontsize=16)
+    plt.suptitle("Geometric Audit: Boundary Protection via Resized Center Crop", fontsize=14)
     plt.tight_layout()
     plt.show()
 

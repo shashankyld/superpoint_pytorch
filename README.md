@@ -47,7 +47,18 @@ Step 1: Train Magic Point on Synthetic Dataset
 One thing that I think I will avoid is to set keypoints at intersections that exist in 2D because of overlapping shapes but really they are not stable points to track. Imagine as the camera moves, the intersection keeps changing in the 2D space in the case shown below:
 ```
 ![alt text](media/Synthetic_Augmentation_Dataset.png "Intersection Issue")
+#### Notes on problems with geomtric augmentations
+```
+Sometimes, geometric augmentations can create artificial corners when the regions outside the boundary enter the image frame after the transformation as shown below. Look at the perspective and affine sections where ellipse now has two more corners that are missed out in the ground truth keypoints. 
 
+I want to have perfect ground truth keypoints and hence, I will add cropping after geometric augmentations to avoid such cases. This ensures diversity that comes from perspective distortions without post-processing issues for new keypoint search.
+```
+![alt text](media/problemwithgeometricaugmentations.png "Problem with Geometric Augmentations")
+
+```
+I for now just implemented cropping after geometric augmentations just to avoid the above issue. In future, I can think of more robust ways to handle this.
+```
+![alt text](media/fix_to_geometric_warp_errors_cropping.png "Solution with Cropping")
 
 ## Model Architecture
 ![alt text](media/model_infographics.png "Model Infographics")
