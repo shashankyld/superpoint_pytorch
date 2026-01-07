@@ -60,5 +60,8 @@ I for now just implemented cropping after geometric augmentations just to avoid 
 ```
 ![alt text](media/fix_to_geometric_warp_errors_cropping.png "Solution with Cropping")
 
+#### Final Setup for Synthetic Dataset Augmentations
+![alt text](media/Synthetic_Final_Setup_Dataset.png "Final Augmentation Pipeline")    
+
 ## Model Architecture
 ![alt text](media/model_infographics.png "Model Infographics")

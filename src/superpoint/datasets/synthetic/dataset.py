@@ -9,6 +9,7 @@ class SyntheticDataset(Dataset):
     def __init__(self, config):
         self.h, self.w = config.height, config.width
         self.q_level = config.quality_level
+        self.n_shapes = config.n_shapes
 
     def __len__(self):
         return 1000000 # Infinite generator
@@ -83,14 +84,16 @@ class SyntheticDataset(Dataset):
         return np.array(final_verified)
 
     def __getitem__(self, idx):
-        img = np.zeros((self.h, self.w), dtype=np.uint8)
+        img = np.zeros((self.h, self.w), dtype=np.uint8) 
+        # Set random color background
+        img[:] = np.random.randint(0, 50)
         pts = []
         
         funcs = [shapes.draw_triangle, shapes.draw_cube, shapes.draw_star, 
                  shapes.draw_checkerboard, shapes.draw_lines, shapes.draw_polygon, shapes.draw_ellipse]
         
         # Draw 2-5 random shapes per frame
-        for func in np.random.choice(funcs, np.random.randint(2, 5)):
+        for func in np.random.choice(funcs, size=self.n_shapes, replace=True):
             func(img, pts)
             
         final_pts = self._verify_points(img, pts)

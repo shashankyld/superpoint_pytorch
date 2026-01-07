@@ -212,7 +212,7 @@ def draw_checkerboard(img, points_list):
     h_img, w_img = img.shape[:2]
     
     # 1. Define Non-Uniform Grid
-    rows, cols = np.random.randint(3, 9), np.random.randint(3, 9)
+    rows, cols = np.random.randint(3, 6), np.random.randint(3, 6)
     col_widths = np.random.randint(20, 60, size=cols)
     row_heights = np.random.randint(20, 60, size=rows)
     grid_w, grid_h = np.sum(col_widths), np.sum(row_heights)

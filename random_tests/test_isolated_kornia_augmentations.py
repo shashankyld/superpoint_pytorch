@@ -10,7 +10,7 @@ def test_isolated_kornia_augmentations():
     class Config:
         height = 240
         width = 320
-        n_shapes = 5 # Auditing edge interactions
+        n_shapes = 10 # Auditing edge interactions
         quality_level = 0.01
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,7 +28,8 @@ def test_isolated_kornia_augmentations():
     def wrap_geo(op):
         return K.AugmentationSequential(
             op,
-            K.RandomResizedCrop(size=(240, 320), scale=(0.7, 0.7), ratio=(1.0, 1.0), p=1.0), 
+            K.RandomResizedCrop(size=(240, 320), scale=(0.6, 0.6), ratio=(1.0, 1.0), p=1.0),
+            # K.CenterCrop(size=(int(Config.height * 0.75), int(Config.width * 0.75)), keepdim=True, p=1.0),
             data_keys=["input", "keypoints"]
         )
 
@@ -39,8 +40,9 @@ def test_isolated_kornia_augmentations():
         "Perspective": lambda x, p: wrap_geo(K.RandomPerspective(distortion_scale=0.2, p=1.0))(x, p),
         "Rotation": lambda x, p: wrap_geo(K.RandomRotation(degrees=45.0, p=1.0))(x, p),
         "Affine": lambda x, p: wrap_geo(K.RandomAffine(degrees=0, translate=(0.2, 0.2), p=1.0))(x, p),
+        "Centre Crop": lambda x, p: wrap_geo(K.CenterCrop(size=(240, 320), keepdim=True, p=1.0))(x, p),
         
-        # FISHEYE Case fails to transform points correclty. So I commented it out. 
+        # FISHEYE Case fails to transform points correctly. So I commented it out. 
 
         # # FISHEYE FIXED: Passing shape (2,) tensors as ranges
         # "Fisheye": lambda x, p: wrap_geo(K.RandomFisheye(
@@ -49,8 +51,8 @@ def test_isolated_kornia_augmentations():
         #     gamma=torch.tensor([1.4, 1.6]), p=1.0))(x, p),
         
         "Gauss Noise": lambda x, p: (K.RandomGaussianNoise(std=0.1, p=1.0)(x), p),
-        "Salt & Pepper": lambda x, p: (augmentor.add_salt_and_pepper(x.clone(), amount=0.03), p),
-        "Blobs": lambda x, p: (augmentor.forward(x, p)[0], p) 
+        "Salt & Pepper": lambda x, p: (K.RandomSaltAndPepperNoise(amount=0.05, salt_vs_pepper=0.5, p=1.0)(x), p),
+        "Combined": lambda x, p: augmentor.forward(x, p) 
     }
 
     # 4. Run and Visualize
@@ -60,7 +62,7 @@ def test_isolated_kornia_augmentations():
             aug_img, aug_pts = aug_fn(img_gpu.clone(), pts_gpu.clone())
         
         img_np = aug_img.squeeze().cpu().numpy()
-        pts_np = aug_pts.squeeze().cpu().numpy()
+        pts_np = aug_pts.view(-1, 2).cpu().numpy()
         
         # Final boundary filter for the 240x320 frame
         mask = (pts_np[:, 0] >= 0) & (pts_np[:, 0] < Config.width) & \
