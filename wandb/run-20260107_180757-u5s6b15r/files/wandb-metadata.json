@@ -1,0 +1,17 @@
+{
+  "os":  "Linux-5.15.0-139-generic-x86_64-with-glibc2.31",
+  "python":  "CPython 3.13.11",
+  "startedAt":  "2026-01-07T17:07:57.314069Z",
+  "program":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py",
+  "codePath":  "train_magicpoint.py",
+  "codePathLocal":  "train_magicpoint.py",
+  "git":  {
+    "remote":  "git@github.com:shashankyld/superpoint_pytorch.git",
+    "commit":  "1d38ba193c6113a2c1091f58e0773faa58d6ae1d"
+  },
+  "email":  "shashankyld@gmail.com",
+  "root":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch",
+  "host":  "legion",
+  "executable":  "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/bin/python3",
+  "writerId":  "2b488z73clme8c8j0z9874k2gkx3v3qj"
+}

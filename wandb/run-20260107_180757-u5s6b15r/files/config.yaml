@@ -1,0 +1,47 @@
+_wandb:
+    value:
+        cli_version: 0.23.1
+        e:
+            2b488z73clme8c8j0z9874k2gkx3v3qj:
+                codePath: train_magicpoint.py
+                codePathLocal: train_magicpoint.py
+                email: shashankyld@gmail.com
+                executable: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/bin/python3
+                git:
+                    commit: 1d38ba193c6113a2c1091f58e0773faa58d6ae1d
+                    remote: git@github.com:shashankyld/superpoint_pytorch.git
+                host: legion
+                os: Linux-5.15.0-139-generic-x86_64-with-glibc2.31
+                program: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py
+                python: CPython 3.13.11
+                root: /home/shashank/Documents/UniBonn/grad/superpoint_pytorch
+                startedAt: "2026-01-07T17:07:57.314069Z"
+                writerId: 2b488z73clme8c8j0z9874k2gkx3v3qj
+        m: []
+        python_version: 3.13.11
+        t:
+            "1":
+                - 1
+                - 79
+            "2":
+                - 1
+                - 79
+            "3":
+                - 13
+                - 16
+            "4": 3.13.11
+            "5": 0.23.1
+            "12": 0.23.1
+            "13": linux-x86_64
+architecture:
+    value: MagicPoint-VGG
+batch_size:
+    value: 32
+epochs:
+    value: 20
+height:
+    value: 240
+lr:
+    value: 0.001
+width:
+    value: 320

@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/wandb_config.py", line 165, in __getattr__
+    return self.__getitem__(key)
+           ~~~~~~~~~~~~~~~~^^^^^
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/wandb_config.py", line 130, in __getitem__
+    return self._items[key]
+           ~~~~~~~~~~~^^^^^
+KeyError: 'quality_level'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py", line 95, in <module>
+    train()
+    ~~~~~^^
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/train_magicpoint.py", line 30, in train
+    dataset = SyntheticDataset(config)
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/src/superpoint/datasets/synthetic/dataset.py", line 11, in __init__
+    self.q_level = config.quality_level
+                   ^^^^^^^^^^^^^^^^^^^^
+  File "/home/shashank/Documents/UniBonn/grad/superpoint_pytorch/.venv/lib/python3.13/site-packages/wandb/sdk/wandb_config.py", line 167, in __getattr__
+    raise AttributeError(
+        f"{self.__class__!r} object has no attribute {key!r}"
+    ) from ke
+AttributeError: <class 'wandb.sdk.wandb_config.Config'> object has no attribute 'quality_level'
