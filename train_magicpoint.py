@@ -73,7 +73,7 @@ def train():
         project="superpoint-pytorch",
         name="magicpoint-synthetic-weighted",
         config={
-            "lr": 1e-3,
+            "lr": 1e-6,
             "batch_size": 32,
             "epochs": 20,
             "height": 240,

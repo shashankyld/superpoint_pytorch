@@ -8,7 +8,7 @@ class DetectorLoss(nn.Module):
         self.cell_size = cell_size
         weights = torch.ones(65)
         weights[64] = 1.0  # Background weight
-        weights[:64] = 100.0 # Corner weight
+        weights[:64] = 1.0 # Corner weight
         # This makes the tensor "visible" to the .to(device) call
         self.register_buffer('loss_weights', weights)
         self.cross_entropy = nn.CrossEntropyLoss(weight=self.loss_weights, reduction='mean')
