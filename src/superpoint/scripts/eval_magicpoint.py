@@ -41,16 +41,30 @@ def main():
     model = MagicPoint().to(device)
     best_path = "checkpoints/magicpoint_best.pth"
     if not os.path.exists(best_path):
-        print("Error: magicpoint_best.pth not found!")
+        print(f"Error: {best_path} not found!")
         return
-    
-    model.load_state_dict(torch.load(best_path, map_location=device, weights_only=True))
+
+    # Load the full checkpoint dictionary
+    checkpoint = torch.load(best_path, map_location=device, weights_only=False)
+
+    # Check if it's the new dictionary format or the old raw weights format
+    if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+        print("[*] Loading from NEW checkpoint format (with optimizer state)")
+        model.load_state_dict(checkpoint['model_state_dict'])
+    else:
+        print("[*] Loading from OLD raw weights format")
+        model.load_state_dict(checkpoint)
+
     model.eval()
     
-    # 2. Setup Image Paths (Create a folder called 'test_images')
-    os.makedirs("data/test_results", exist_ok=True)
-    image_paths = glob.glob("data/test_images/*.jpg") + glob.glob("data/test_images/*.png")
-    
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../"))
+    best_path = os.path.join(root_dir, "checkpoints/magicpoint_best.pth")
+    test_images_path = os.path.join(root_dir, "data/test_images")
+    results_path = os.path.join(root_dir, "data/test_results")
+
+    os.makedirs(results_path, exist_ok=True)
+    image_paths = glob.glob(f"{test_images_path}/*.jpg") + glob.glob(f"{test_images_path}/*.png")
+
     for path in image_paths:
         img_tensor, img_orig = preprocess_image(path, device)
         if img_tensor is None: continue
@@ -65,7 +79,8 @@ def main():
         
         # 5. Save
         fname = os.path.basename(path)
-        cv2.imwrite(f"data/test_results/pred_magicpoint_{fname}", img_out)
+        # --- MODIFY THE SAVE LINE ---
+        cv2.imwrite(os.path.join(results_path, f"pred_magicpoint_{fname}"), img_out)
         print(f"Processed {fname}: Found {len(ys)} points.")
 
 if __name__ == "__main__":

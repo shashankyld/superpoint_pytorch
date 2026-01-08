@@ -3,7 +3,7 @@ import sys
 import numpy as np
 import cv2
 
-img_path = "../data/downloaded/indoor.jpg"
+img_path = "data/downloaded/indoor.jpg"
 image = cv2.imread(img_path)
 # Resize to max width or height of 240 pixels
 max_dim = 500
@@ -19,10 +19,14 @@ corners = cv2.goodFeaturesToTrack(
     qualityLevel=0.1, minDistance=5
     )
 
+counter = 0
 if corners is not None: 
     for i in corners: 
         x,y = i.ravel() # Ravel flattens the array
         cv2.circle(image, (int(x),int(y)), 3, 255, -1)
+        counter += 1
+
+print("Number of corners detected: ", counter)
 
 #Display
 

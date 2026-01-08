@@ -76,8 +76,12 @@ uv run train_magicpoint.py
 #### Final Results on Magic Point trained on Synthetic Dataset
 ![alt text](media/MagicPoint_FinalResults.png "Magic Point Final Results")
 
-#### Direct Results of Magic Point on Real Images without any Fine-tuning - Even Without Homoggraphic Adaptation.
+#### Direct Results of Magic Point on Real Images without any Fine-tuning - Even Without Homographic Adaptation.
 ![alt text](media/pred_magicpoint_indoor.jpg "Magic Point Real Image Results")
+
+#### Training SuperPoint with Homographic Adaptation
+
+![alt text](media/Homographic_Adaptations_Sample.png "Homographic Adaptations Sample")
 
 
 ## Model Architecture
