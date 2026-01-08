@@ -84,6 +84,21 @@ uv run train_magicpoint.py
 ![alt text](media/Homographic_Adaptations_Sample.png "Homographic Adaptations Sample")
 
 #### Creating Pseudo Labels after Homographic Adaptation for coco5K Val Set
+
+Download coco5K val set from: 
+```
+# 1. Create the directories
+mkdir -p data/coco
+
+# 2. Download (using -c to allow resuming if connection drops)
+wget -c http://images.cocodataset.org/zips/val2017.zip -P data/coco/
+
+# 3. Extract and Cleanup
+# This will extract into data/coco/val2017/
+unzip data/coco/val2017.zip -d data/coco/
+rm data/coco/val2017.zip
+```
+
 ![alt text](media/Coco_PseudoLabels_From_HA.png "Coco5K Pseudo Labels from HA")
 
 ## Model Architecture
