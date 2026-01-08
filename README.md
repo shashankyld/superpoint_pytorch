@@ -63,5 +63,23 @@ I for now just implemented cropping after geometric augmentations just to avoid 
 #### Final Setup for Synthetic Dataset Augmentations
 ![alt text](media/Synthetic_Final_Setup_Dataset.png "Final Augmentation Pipeline")    
 
+#### Training Magic Point 
+```
+uv run train_magicpoint.py
+```
+```
+1. 10e-4 learning rate with 100:1 weighted cross entropy loss did not converge well. Loss was around 2 after X epochs.
+2. 10e-5 learning rate with 10:1 weighted cross entropy loss converged well. Loss was around 0.7 after Y epochs.
+3. 10e-6 learning rate with 1:1 weighted cross entropy loss converged well. Loss was around 0.1 after Z epochs.
+```
+![alt text](media/magic_point_pred_threshold_0.15.png "Magic Point Predictions on Synthetic Data")
+#### Final Results on Magic Point trained on Synthetic Dataset
+![alt text](media/MagicPoint_FinalResults.png "Magic Point Final Results")
+
+#### Direct Results of Magic Point on Real Images without any Fine-tuning - Even Without Homoggraphic Adaptation.
+![alt text](media/pred_magicpoint_indoor.jpg "Magic Point Real Image Results")
+
+
 ## Model Architecture
+
 ![alt text](media/model_infographics.png "Model Infographics")
