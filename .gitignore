@@ -14,6 +14,10 @@ wheels/
 checkpoints/*
 # DO NOT ignore the best weights
 !checkpoints/magicpoint_best.pth
+!checkpoints/superpoint_final.pth
 
 # Weights & Biases
 wandb/
+
+# Data
+data/coco/

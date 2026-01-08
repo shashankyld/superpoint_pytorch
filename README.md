@@ -83,6 +83,8 @@ uv run train_magicpoint.py
 
 ![alt text](media/Homographic_Adaptations_Sample.png "Homographic Adaptations Sample")
 
+#### Creating Pseudo Labels after Homographic Adaptation for coco5K Val Set
+![alt text](media/Coco_PseudoLabels_From_HA.png "Coco5K Pseudo Labels from HA")
 
 ## Model Architecture
 
